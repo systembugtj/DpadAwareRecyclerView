@@ -626,7 +626,9 @@ public class DpadAwareRecyclerView extends RecyclerView implements
 
         if (state == SCROLL_STATE_IDLE) {
             View focusedChild = getFocusedChild();
-            requestChildFocusInner(focusedChild, focusedChild);
+            if (focusedChild != null) {
+                requestChildFocusInner(focusedChild, focusedChild);
+            }
         }
     }
 
@@ -759,7 +761,6 @@ public class DpadAwareRecyclerView extends RecyclerView implements
                 && event.getRepeatCount() == 0) {
             fireOnItemClickEvent(focusedChild);
         }
-
         return consumed;
     }
 

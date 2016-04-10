@@ -42,6 +42,11 @@ import java.lang.ref.WeakReference;
  */
 public class ExtGridLayoutManager extends GridLayoutManager {
 
+    public static final int AUTO_FIT = 0;
+    private static final int DO_NOT_FOCUS = -1;
+    private static final int FIRST = -2;
+    private static final int LAST = -3;
+
     /**
      * Builder for {@link ExtGridLayoutManager}.
      */
@@ -209,12 +214,6 @@ public class ExtGridLayoutManager extends GridLayoutManager {
         }
     }
 
-    public static final int AUTO_FIT = 0;
-
-    private static final int DO_NOT_FOCUS = -1;
-    private static final int FIRST = -2;
-    private static final int LAST = -3;
-
     private float mOffsetFraction = 0.f;
     private boolean mOffsetEnabled = false;
     private boolean mCircular = false;
@@ -238,11 +237,13 @@ public class ExtGridLayoutManager extends GridLayoutManager {
 
     public ExtGridLayoutManager(Context context, int spanCount) {
         super(context, spanCount);
+        mSpanCount = spanCount;
     }
 
     public ExtGridLayoutManager(Context context, int spanCount, int orientation,
             boolean reverseLayout) {
         super(context, spanCount, orientation, reverseLayout);
+        mSpanCount = spanCount;
     }
 
     public void disableOffset() {
