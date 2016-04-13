@@ -324,7 +324,7 @@ public class ExtGridLayoutManager extends GridLayoutManager {
             wrap = heightMode == View.MeasureSpec.AT_MOST;
         }
 
-        if (wrap && getItemCount() > 0) {
+        if (wrap && state.getItemCount() > 0) {
             int spanCount = getSpanCount();
             View dummyChild = recycler.getViewForPosition(0);
             measureChildWithMargins(dummyChild, 0, 0);
@@ -348,7 +348,7 @@ public class ExtGridLayoutManager extends GridLayoutManager {
 
         super.onMeasure(recycler, state, widthSpec, heightSpec);
 
-        if (getItemCount() > 0 && mSpanCount == AUTO_FIT) {
+        if (state.getItemCount() > 0 && mSpanCount == AUTO_FIT) {
             resolveAutoFit(recycler);
         }
     }
