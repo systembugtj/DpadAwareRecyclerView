@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.jfrog.artifactory'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 23
@@ -26,4 +28,39 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:recyclerview-v7:23.2.0'
     compile 'com.android.support:support-annotations:23.2.0'
+}
+
+def libraryGroupId = 'com.conouch.view'
+def libraryArtifactId = 'dpad-aware-recycler-view'
+def libraryVersion = "1.0.0"
+
+publishing {
+    publications {
+        aar(MavenPublication) {
+            groupId libraryGroupId
+            version libraryVersion
+            artifactId libraryArtifactId
+
+            artifact("$buildDir/outputs/aar/${project.name}-release.aar")
+        }
+    }
+}
+
+artifactory {
+    contextUrl = artifactory_context_url
+    publish {
+        repository {
+            repoKey = 'libs-release-local'
+
+            username = artifactory_username
+            password = artifactory_password
+        }
+        defaults {
+            publications('aar')
+            publishArtifacts = true
+
+            properties = ['qa.level': 'basic', 'q.os': 'android', 'dev.team': 'core']
+            publishPom = true
+        }
+    }
 }
